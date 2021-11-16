@@ -8,7 +8,7 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 
 const pkg = require('./package.json')
-const name = pkg.name
+const name = 'uni-store'
 
 const banner = `/*!
   * ${pkg.name} v${pkg.version}

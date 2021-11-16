@@ -14,7 +14,7 @@
 
   "dtsRollup": {
     "enabled": true,
-    "untrimmedFilePath": "./dist/<unscopedPackageName>.d.ts"
+    "untrimmedFilePath": "./dist/uni-store.d.ts"
   },
 
   "tsdocMetadata": {
