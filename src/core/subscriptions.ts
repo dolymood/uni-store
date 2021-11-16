@@ -17,14 +17,3 @@ export function addSubscription<T extends Method>(
 
   return removeSubscription
 }
-
-// todo
-// use in next $patch feat
-export function triggerSubscriptions<T extends Method>(
-  subscriptions: T[],
-  ...args: Parameters<T>
-) {
-  subscriptions.forEach((callback) => {
-    callback(...args)
-  })
-}
