@@ -47,7 +47,7 @@ export const useCounter = defineStore(() => {
 `defineStore` returns a function that has to be called to get access to the store:
 
 ```ts
-import { nextTick } from 'uni-store'
+import { nextTick, computed } from 'uni-store'
 import { useCounter } from '@/stores/counter'
 
 const counter = useCounter()
