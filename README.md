@@ -1,4 +1,4 @@
-# uni-store
+# @uni-store/core
 
 Unified Store.
 
@@ -9,11 +9,11 @@ Inspired by [Pinia](https://github.com/posva/pinia).
 ## Installation
 
 ```bash
-pnpm add uni-store
+pnpm add @uni-store/core
 # or with yarn
-yarn add uni-store
+yarn add @uni-store/core
 # or with npm
-npm install uni-store
+npm install @uni-store/core
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ You can create as many stores as you want:
 
 ```ts
 // src/stores/counter
-import { defineStore, ref, computed } from 'uni-store'
+import { defineStore, ref, computed } from '@uni-store/core'
 
 export const useCounter = defineStore(() => {
   const n = ref(0)
@@ -47,7 +47,7 @@ export const useCounter = defineStore(() => {
 `defineStore` returns a function that has to be called to get access to the store:
 
 ```ts
-import { nextTick, computed } from 'uni-store'
+import { nextTick, computed } from '@uni-store/core'
 import { useCounter } from '@/stores/counter'
 
 const counter = useCounter()
