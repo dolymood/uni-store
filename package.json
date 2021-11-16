@@ -1,0 +1,82 @@
+{
+  "name": "un-store",
+  "version": "0.0.1",
+  "description": "Unified Store",
+  "main": "index.js",
+  "module": "dist/un-store.mjs",
+  "unpkg": "dist/un-store.iife.prod.js",
+  "jsdelivr": "dist/un-store.iife.prod.js",
+  "types": "dist/un-store.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./dist/un-store.esm-browser.js",
+      "node": {
+        "import": {
+          "production": "./dist/un-store.prod.cjs",
+          "development": "./dist/un-store.mjs",
+          "default": "./dist/un-store.mjs"
+        },
+        "require": {
+          "production": "./dist/un-store.prod.cjs",
+          "development": "./dist/un-store.cjs",
+          "default": "./index.js"
+        }
+      },
+      "import": "./dist/un-store.mjs"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "rm -rf dist && rollup -c ./rollup.config.js",
+    "build:dts": "api-extractor run --local --verbose",
+    "test": "pnpm test:unit",
+    "test:unit": "jest --coverage"
+  },
+  "keywords": [
+    "store",
+    "unistore",
+    "uni-store",
+    "un",
+    "uni"
+  ],
+  "author": "dolymood@gmail.com",
+  "files": [
+    "dist/*.js",
+    "dist/*.mjs",
+    "dist/*.cjs",
+    "dist/un-store.d.ts",
+    "index.js",
+    "index.cjs",
+    "LICENSE",
+    "README.md"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@vue/reactivity": "^3.2.22",
+    "@vue/runtime-core": "^3.2.22"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.18.19",
+    "@rollup/plugin-alias": "^3.1.8",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@rollup/plugin-replace": "^3.0.0",
+    "@sucrase/jest-plugin": "^2.2.0",
+    "@types/jest": "^27.0.2",
+    "jest": "^27.3.1",
+    "rollup": "^2.60.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "typescript": "^4.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dolymood/un-store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dolymood/un-store/issues"
+  },
+  "homepage": "https://github.com/dolymood/un-store#readme"
+}
