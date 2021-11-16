@@ -35,7 +35,7 @@ const outputConfigs = {
     format: `iife`,
   },
   browser: {
-    file: 'dist/un-store.esm-browser.js',
+    file: 'dist/uni-store.esm-browser.js',
     format: `es`,
   },
 }
@@ -71,7 +71,7 @@ function createConfig(buildName, output, plugins = []) {
   const isNodeBuild = buildName === 'cjs'
   const isBundlerESMBuild = buildName === 'browser' || buildName === 'mjs'
 
-  if (isGlobalBuild) output.name = 'UnStore'
+  if (isGlobalBuild) output.name = 'UniStore'
 
   const shouldEmitDeclarations = !hasTSChecked
 

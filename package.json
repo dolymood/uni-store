@@ -1,28 +1,28 @@
 {
-  "name": "un-store",
+  "name": "uni-store",
   "version": "0.0.1",
   "description": "Unified Store",
   "main": "index.js",
-  "module": "dist/un-store.mjs",
-  "unpkg": "dist/un-store.iife.prod.js",
-  "jsdelivr": "dist/un-store.iife.prod.js",
-  "types": "dist/un-store.d.ts",
+  "module": "dist/uni-store.mjs",
+  "unpkg": "dist/uni-store.iife.prod.js",
+  "jsdelivr": "dist/uni-store.iife.prod.js",
+  "types": "dist/uni-store.d.ts",
   "exports": {
     ".": {
-      "browser": "./dist/un-store.esm-browser.js",
+      "browser": "./dist/uni-store.esm-browser.js",
       "node": {
         "import": {
-          "production": "./dist/un-store.prod.cjs",
-          "development": "./dist/un-store.mjs",
-          "default": "./dist/un-store.mjs"
+          "production": "./dist/uni-store.prod.cjs",
+          "development": "./dist/uni-store.mjs",
+          "default": "./dist/uni-store.mjs"
         },
         "require": {
-          "production": "./dist/un-store.prod.cjs",
-          "development": "./dist/un-store.cjs",
+          "production": "./dist/uni-store.prod.cjs",
+          "development": "./dist/uni-store.cjs",
           "default": "./index.js"
         }
       },
-      "import": "./dist/un-store.mjs"
+      "import": "./dist/uni-store.mjs"
     },
     "./package.json": "./package.json",
     "./dist/*": "./dist/*"
@@ -47,7 +47,7 @@
     "dist/*.js",
     "dist/*.mjs",
     "dist/*.cjs",
-    "dist/un-store.d.ts",
+    "dist/uni-store.d.ts",
     "index.js",
     "index.cjs",
     "LICENSE",
@@ -74,10 +74,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dolymood/un-store.git"
+    "url": "git+https://github.com/dolymood/uni-store.git"
   },
   "bugs": {
-    "url": "https://github.com/dolymood/un-store/issues"
+    "url": "https://github.com/dolymood/uni-store/issues"
   },
-  "homepage": "https://github.com/dolymood/un-store#readme"
+  "homepage": "https://github.com/dolymood/uni-store#readme"
 }
