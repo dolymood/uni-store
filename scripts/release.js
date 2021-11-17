@@ -112,8 +112,8 @@ async function main() {
   const { stdout } = await run('git', ['diff'], { stdio: 'pipe' })
   if (stdout) {
     step('\nCommitting changes...')
-    // await runIfNotDry('git', ['add', '-A'])
-    // await runIfNotDry('git', ['commit', '-m', `release: v${targetVersion}`])
+    await runIfNotDry('git', ['add', '-A'])
+    await runIfNotDry('git', ['commit', '-m', `release: v${targetVersion}`])
   } else {
     console.log('No changes to commit.')
   }
@@ -126,9 +126,9 @@ async function main() {
 
   // push to GitHub
   step('\nPushing to GitHub...')
-  // await runIfNotDry('git', ['tag', `v${targetVersion}`])
-  // await runIfNotDry('git', ['push', 'origin', `refs/tags/v${targetVersion}`])
-  // await runIfNotDry('git', ['push'])
+  await runIfNotDry('git', ['tag', `v${targetVersion}`])
+  await runIfNotDry('git', ['push', 'origin', `refs/tags/v${targetVersion}`])
+  await runIfNotDry('git', ['push'])
 
   if (isDryRun) {
     console.log(`\nDry run finished - run git diff to see package changes.`)
