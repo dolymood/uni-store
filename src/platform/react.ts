@@ -121,7 +121,7 @@ function copyStaticProperties(base: any, target: any) {
   })
 }
 
-export function useObserver<T>(fn: () => T): T {
+function useObserver<T>(fn: () => T): T {
   // todo: necessary ?
   const scopeRef = useRef<EffectScope | null>(null)
   const forceUpdate = useForceUpdate()
