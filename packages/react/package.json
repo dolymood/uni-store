@@ -1,0 +1,70 @@
+{
+  "name": "@uni-store/react",
+  "version": "0.1.0",
+  "description": "Unified Store for React",
+  "main": "index.js",
+  "module": "dist/uni-store-react.mjs",
+  "unpkg": "dist/uni-store-react.iife.prod.js",
+  "jsdelivr": "dist/uni-store-react.iife.prod.js",
+  "types": "dist/uni-store-react.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./dist/uni-store-react.esm-browser.js",
+      "node": {
+        "import": {
+          "production": "./dist/uni-store-react.prod.cjs",
+          "development": "./dist/uni-store-react.mjs",
+          "default": "./dist/uni-store-react.mjs"
+        },
+        "require": {
+          "production": "./dist/uni-store-react.prod.cjs",
+          "development": "./dist/uni-store-react.cjs",
+          "default": "./index.js"
+        }
+      },
+      "import": "./dist/uni-store-react.mjs"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
+  "sideEffects": false,
+  "buildOptions": {
+    "filename": "uni-store-react",
+    "name": "UniStoreReact"
+  },
+  "keywords": [
+    "@uni-store/react",
+    "store",
+    "unistore",
+    "uni-store",
+    "un",
+    "uni"
+  ],
+  "author": "dolymood@gmail.com",
+  "files": [
+    "dist/*.js",
+    "dist/*.mjs",
+    "dist/*.cjs",
+    "dist/uni-store-react.d.ts",
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@uni-store/core": "^0.1.0"
+  },
+  "peerDependencies": {
+    "@uni-store/core": "^0.1.0",
+    "react": "^17"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dolymood/uni-store.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/dolymood/uni-store/issues"
+  },
+  "homepage": "https://github.com/dolymood/uni-store#readme"
+}

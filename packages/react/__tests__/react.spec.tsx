@@ -11,10 +11,10 @@ import {
   computed,
   ref,
   defineStore
-} from '../../src/core'
+} from '@uni-store/core'
 import {
   reactiveReact
-} from '../../src/platform/react'
+} from '../src'
 
 afterEach(cleanup)
 

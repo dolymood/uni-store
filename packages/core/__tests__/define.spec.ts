@@ -3,7 +3,7 @@ import {
   ref,
   nextTick,
   defineStore
-} from '../../src'
+} from '../src'
 
 describe('Test Core', () => {
   const useCounter = defineStore(() => {

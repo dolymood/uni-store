@@ -1,0 +1,67 @@
+{
+  "name": "@uni-store/core",
+  "version": "0.1.0",
+  "description": "Unified Store",
+  "main": "index.js",
+  "module": "dist/uni-store.mjs",
+  "unpkg": "dist/uni-store.iife.prod.js",
+  "jsdelivr": "dist/uni-store.iife.prod.js",
+  "types": "dist/uni-store.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./dist/uni-store.esm-browser.js",
+      "node": {
+        "import": {
+          "production": "./dist/uni-store.prod.cjs",
+          "development": "./dist/uni-store.mjs",
+          "default": "./dist/uni-store.mjs"
+        },
+        "require": {
+          "production": "./dist/uni-store.prod.cjs",
+          "development": "./dist/uni-store.cjs",
+          "default": "./index.js"
+        }
+      },
+      "import": "./dist/uni-store.mjs"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
+  "sideEffects": false,
+  "buildOptions": {
+    "filename": "uni-store",
+    "name": "UniStore"
+  },
+  "keywords": [
+    "@uni-store/core",
+    "store",
+    "unistore",
+    "uni-store",
+    "un",
+    "uni"
+  ],
+  "author": "dolymood@gmail.com",
+  "files": [
+    "dist/*.js",
+    "dist/*.mjs",
+    "dist/*.cjs",
+    "dist/uni-store.d.ts",
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@vue/reactivity": "^3.2.22",
+    "@vue/runtime-core": "^3.2.22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dolymood/uni-store.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/dolymood/uni-store/issues"
+  },
+  "homepage": "https://github.com/dolymood/uni-store#readme"
+}

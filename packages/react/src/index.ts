@@ -18,10 +18,12 @@ import type {
   Ref
 } from 'react'
 import {
-  EffectScope,
   effectScope,
   watchSyncEffect
-} from '../core'
+} from '@uni-store/core'
+import type {
+  EffectScope
+} from '@uni-store/core'
 
 export interface ReactiveReactOptions {
   forwardRef?: boolean

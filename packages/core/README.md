@@ -1,6 +1,6 @@
-# uni-store
+# @uni-store/core
 
-Unified Store. You can use `@uni-store/core` with Vue or React(with `@uni-store/react`) fornow.
+Unified Store. You can use `@uni-store/core` with Vue or React fornow.
 
 Based on [@vue/reactivity](https://github.com/vuejs/vue-next/tree/master/packages/reactivity) and `watch` with [@vue/runtime-core](https://github.com/vuejs/vue-next/tree/master/packages/runtime-core).
 
@@ -101,37 +101,6 @@ export default defineComponent({
 })
 ```
 
-### With React
-
-First, install:
-
-```bash
-pnpm add @uni-store/react
-# or with yarn
-yarn add @uni-store/react
-# or with npm
-npm install @uni-store/react
-```
-
-```tsx
-import { reactiveReact } from '@uni-store/react'
-
-const ReactiveView = reactiveReact(function () {
-  const { n, computedN, increment } = useCounter()
-  return (
-    <div>
-      <p>You clicked {n} times</p>
-      <p>The computed times {computedN}</p>
-      <button onClick={() => increment()}>
-        Click me
-      </button>
-    </div>
-  )
-})
-
-ReactDOM.render(<ReactiveView />, document.body)
-```
-
 ## Documentation
 
 First of all, you need to read:
@@ -207,21 +176,6 @@ store.$subscribe((state) => {
   localStorage.setItem('cart', JSON.stringify(state))
 })
 ```
-
-### With React
-
-```tsx
-import { reactiveReact } from '@uni-store/react'
-
-const ReactiveView = reactiveReact(function () {
-  const { n } = useStore()
-  return <p>You clicked {n} times</p>
-})
-
-ReactDOM.render(<ReactiveView />, document.body)
-```
-
-You can get a Reactive React Component by `const ReactiveComponent = reactiveReact(Component: React.FunctionComponent)`.
 
 ## License
 

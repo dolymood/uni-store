@@ -3,17 +3,14 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageReporters: ['html', 'lcov', 'text'],
   collectCoverageFrom: [
-    'src/**/*.ts'
+    'packages/*/src/*.ts'
   ],
   coveragePathIgnorePatterns: [
     '/node_modules/',
-    'src/index.ts',
-    'src/core/index.ts',
     '\\.d\\.ts$'
   ],
   testMatch: [
-    '<rootDir>/test/unit/*.spec.ts',
-    '<rootDir>/test/unit/*.spec.tsx'
+    '<rootDir>/packages/**/__tests__/**/*spec.[jt]s?(x)'
   ],
   transform: {
     '^.+\\.tsx?$': '@sucrase/jest-plugin',

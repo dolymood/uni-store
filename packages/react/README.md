@@ -1,19 +1,15 @@
-# uni-store
+# @uni-store/react
 
-Unified Store. You can use `@uni-store/core` with Vue or React(with `@uni-store/react`) fornow.
-
-Based on [@vue/reactivity](https://github.com/vuejs/vue-next/tree/master/packages/reactivity) and `watch` with [@vue/runtime-core](https://github.com/vuejs/vue-next/tree/master/packages/runtime-core).
-
-Inspired by [Pinia](https://github.com/posva/pinia).
+Unified Store for React.
 
 ## Installation
 
 ```bash
-pnpm add @uni-store/core
+pnpm add @uni-store/core @uni-store/react
 # or with yarn
-yarn add @uni-store/core
+yarn add @uni-store/core @uni-store/react
 # or with npm
-npm install @uni-store/core
+npm install @uni-store/core @uni-store/react
 ```
 
 ## Usage
@@ -84,34 +80,7 @@ nextTick(() => {
 })
 ```
 
-### With Vue 3
-
-```ts
-import { defineComponent } from 'vue'
-export default defineComponent({
-  setup () {
-    const counter = useCounter()
-    // but you can not do like this:
-    // const { n } = counter
-    // it breaks reactivity
-    return {
-      counter
-    }
-  }
-})
-```
-
 ### With React
-
-First, install:
-
-```bash
-pnpm add @uni-store/react
-# or with yarn
-yarn add @uni-store/react
-# or with npm
-npm install @uni-store/react
-```
 
 ```tsx
 import { reactiveReact } from '@uni-store/react'

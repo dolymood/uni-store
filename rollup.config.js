@@ -4,11 +4,20 @@
 import path from 'path'
 import ts from 'rollup-plugin-typescript2'
 import replace from '@rollup/plugin-replace'
-import resolve from '@rollup/plugin-node-resolve'
+import nodeResolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 
-const pkg = require('./package.json')
-const name = 'uni-store'
+if (!process.env.TARGET) {
+  throw new Error('TARGET package must be specified via --environment flag.')
+}
+
+const masterVersion = require('./package.json').version
+const packagesDir = path.resolve(__dirname, 'packages')
+const packageDir = path.resolve(packagesDir, process.env.TARGET)
+const resolve = p => path.resolve(packageDir, p)
+const pkg = require(resolve(`package.json`))
+const packageOptions = pkg.buildOptions || {}
+const name = packageOptions.filename
 
 const banner = `/*!
   * ${pkg.name} v${pkg.version}
@@ -35,7 +44,7 @@ const outputConfigs = {
     format: `iife`,
   },
   browser: {
-    file: 'dist/uni-store.esm-browser.js',
+    file: `dist/${name}.esm-browser.js`,
     format: `es`,
   },
 }
@@ -61,10 +70,13 @@ function createConfig(buildName, output, plugins = []) {
   output.banner = banner
   output.externalLiveBindings = false
   output.globals = {
-    'react': 'React'
+    'react': 'React',
+    '@uni-store/core': 'UniStore'
     // '@vue/reactivity': 'VueReactivity',
     // '@vue/runtime-core': ''
   }
+
+  output.file = resolve(output.file)
 
   const isProductionBuild = /\.prod\.[cmj]s$/.test(output.file)
   const isGlobalBuild = buildName === 'global'
@@ -72,7 +84,7 @@ function createConfig(buildName, output, plugins = []) {
   const isNodeBuild = buildName === 'cjs'
   const isBundlerESMBuild = buildName === 'browser' || buildName === 'mjs'
 
-  if (isGlobalBuild) output.name = 'UniStore'
+  if (isGlobalBuild) output.name = packageOptions.name || 'UniStore'
 
   const shouldEmitDeclarations = !hasTSChecked
 
@@ -86,7 +98,7 @@ function createConfig(buildName, output, plugins = []) {
         declaration: shouldEmitDeclarations,
         declarationMap: shouldEmitDeclarations,
       },
-      exclude: ['test'],
+      exclude: ['**/__tests__', 'test-dts']
     },
   })
   // we only need to check TS and generate declarations once for each build.
@@ -94,15 +106,19 @@ function createConfig(buildName, output, plugins = []) {
   // during a single build.
   hasTSChecked = true
 
-  const external = ['react']
+  const external = ['react', '@uni-store/core']
   if (!isGlobalBuild) {
-    external.push.apply(external, ['@vue/runtime-core', '@vue/reactivity', '@vue/shared', '@vue/devtools-api'])
+    external.push.apply(external, ['@vue/shared', '@vue/devtools-api'])
+    external.push.apply(external, [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {})
+    ])
   }
 
-  const nodePlugins = [resolve(), commonjs()]
+  const nodePlugins = [nodeResolve(), commonjs()]
 
   return {
-    input: `src/index.ts`,
+    input: resolve('src/index.ts'),
     // Global and Browser ESM builds inlines everything so that they can be
     // used alone.
     external,
@@ -144,7 +160,7 @@ function createReplacePlugin(
 ) {
   const replacements = {
     __COMMIT__: `"${process.env.COMMIT}"`,
-    __VERSION__: `"${pkg.version}"`,
+    __VERSION__: `"${masterVersion}"`,
     __DEV__:
       isBundlerESMBuild || (isNodeBuild && !isProduction)
         ? // preserve to be handled by bundlers
