@@ -192,6 +192,38 @@ ReactDOM.render(<ReactiveView />, document.body)
 
 You can get a Reactive React Component by `const ReactiveComponent = reactiveReact(Component: React.FunctionComponent)`.
 
+Or even another usage after `v0.2.0`:
+
+```tsx
+import { ref, computed } from '@uni-store/core'
+import { reactiveReact, useSetup } from '@uni-store/react'
+
+const LocalReactiveView = reactiveReact(function () {
+  const { num, computedNum, ins } = useSetup(() => {
+    const num = ref(0)
+    const computedNum = computed(() => {
+      return num.value + 10
+    })
+    const ins = () => {
+      num.value += 2
+    }
+    return {
+      num,
+      computedNum,
+      ins
+    }
+  }, [])
+  return (
+    <div>
+      <p>Num { num }</p>
+      <p>ComNum { computedNum }</p>
+      <button onClick={ () => ins() }>Ins</button>
+    </div>
+  )
+})
+```
+
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
