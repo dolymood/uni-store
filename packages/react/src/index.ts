@@ -25,6 +25,8 @@ import type {
   EffectScope
 } from '@uni-store/core'
 
+export * from './setup'
+
 export interface ReactiveReactOptions {
   forwardRef?: boolean
 }
@@ -133,6 +135,8 @@ function useReactive<T>(fn: () => T): T {
     scopeRef.current = effectScope()
   }
   const scope = scopeRef.current
+  // clear effects, re collect deps
+  scope.effects.length = 0
   scope.run(() => {
     watchSyncEffect(() => {
       if (rendering) {
@@ -147,17 +151,6 @@ function useReactive<T>(fn: () => T): T {
       }
     })
   })
-  // clean up useless effects
-  let i = scope.effects.length - 1
-  while (i < scope.effects.length && i >= 0) {
-    const effect = scope.effects[i]
-    if (!effect.deps.length) {
-      // no deps, clean it
-      effect.stop()
-      scope.effects.splice(i, 1)
-    }
-    i--
-  }
 
   useEffect(() => () => {
     scope.stop()
