@@ -61,6 +61,7 @@ function createConfig(buildName, output, plugins = []) {
   output.banner = banner
   output.externalLiveBindings = false
   output.globals = {
+    'react': 'React'
     // '@vue/reactivity': 'VueReactivity',
     // '@vue/runtime-core': ''
   }
@@ -93,7 +94,7 @@ function createConfig(buildName, output, plugins = []) {
   // during a single build.
   hasTSChecked = true
 
-  const external = []
+  const external = ['react']
   if (!isGlobalBuild) {
     external.push.apply(external, ['@vue/runtime-core', '@vue/reactivity', '@vue/shared', '@vue/devtools-api'])
   }

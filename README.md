@@ -84,6 +84,44 @@ nextTick(() => {
 })
 ```
 
+### With Vue 3
+
+```ts
+import { defineComponent } from 'vue'
+export default defineComponent({
+  setup () {
+    const counter = useCounter()
+    // but you can not do like this:
+    // const { n } = counter
+    // it breaks reactivity
+    return {
+      counter
+    }
+  }
+})
+```
+
+### With React
+
+```tsx
+import { reactiveReact } from '@uni-store/core'
+
+const ReactiveView = reactiveReact(function () {
+  const { n, computedN, increment } = useCounter()
+  return (
+    <div>
+      <p>You clicked {n} times</p>
+      <p>The computed times {computedN}</p>
+      <button onClick={() => increment()}>
+        Click me
+      </button>
+    </div>
+  )
+})
+
+ReactDOM.render(<ReactiveView />, document.body)
+```
+
 ## Documentation
 
 First of all, you need to read:
@@ -160,7 +198,20 @@ store.$subscribe((state) => {
 })
 ```
 
+### With React
 
+```tsx
+import { reactiveReact } from '@uni-store/core'
+
+const ReactiveView = reactiveReact(function () {
+  const { n } = useStore()
+  return <p>You clicked {n} times</p>
+})
+
+ReactDOM.render(<ReactiveView />, document.body)
+```
+
+You can get a Reactive React Component by `const ReactiveComponent = reactiveReact(Component: React.FunctionComponent)`.
 
 ## License
 

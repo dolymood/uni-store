@@ -29,8 +29,9 @@
   },
   "sideEffects": false,
   "scripts": {
-    "release": "pnpm test && pnpm build && pnpm build:dts && pnpm publish --access=public",
-    "build": "rm -rf dist && rollup -c ./rollup.config.js",
+    "release": "pnpm test && pnpm build && pnpm publish --access=public",
+    "build": "rm -rf dist && pnpm build:js && pnpm build:dts",
+    "build:js": "rollup -c ./rollup.config.js",
     "build:dts": "api-extractor run --local --verbose",
     "test": "pnpm test:unit",
     "test:unit": "jest --coverage"

@@ -1,5 +1,4 @@
 import React, {
-  useState,
   FunctionComponent
 } from 'react'
 import {
@@ -11,13 +10,11 @@ import {
 import {
   computed,
   ref,
-  nextTick,
   defineStore
 } from '../../src/core'
 import {
   reactiveReact
 } from '../../src/platform/react'
-
 
 afterEach(cleanup)
 
@@ -40,7 +37,7 @@ describe('Test React', () => {
   })
 
   it('should work correctly with props', () => {
-    const PlainView: FunctionComponent<{ counter: ReturnType<typeof useCounter> }> = function  ({ counter }) {
+    const CounterView: FunctionComponent<{ counter: ReturnType<typeof useCounter> }> = function  ({ counter }) {
       const { n, computedN, increment } = counter
       return (
         <div>
@@ -53,12 +50,12 @@ describe('Test React', () => {
       )
     }
 
-    const CounterView = reactiveReact(PlainView)
+    const ReactiveView = reactiveReact(CounterView)
 
     const App = () => {
       const counter = useCounter()
       return (
-        <CounterView counter={counter} />
+        <ReactiveView counter={counter} />
       )
     }
 
@@ -87,7 +84,7 @@ describe('Test React', () => {
     // hack
     useCounter(true)
 
-    const ReactiveView = function () {
+    const ReactiveView = reactiveReact(function () {
       const { n, computedN, increment } = useCounter()
       return (
         <div>
@@ -98,13 +95,11 @@ describe('Test React', () => {
           </button>
         </div>
       )
-    }
-
-    const CounterView = reactiveReact(ReactiveView)
+    })
 
     const App = () => {
       return (
-        <CounterView />
+        <ReactiveView />
       )
     }
 
