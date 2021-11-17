@@ -1,6 +1,6 @@
 # @uni-store/core
 
-Unified Store.
+Unified Store. You can use `@uni-store/core` with Vue or React fornow.
 
 Based on [@vue/reactivity](https://github.com/vuejs/vue-next/tree/master/packages/reactivity) and `watch` with [@vue/runtime-core](https://github.com/vuejs/vue-next/tree/master/packages/runtime-core).
 
@@ -159,6 +159,8 @@ store.$subscribe((state) => {
   localStorage.setItem('cart', JSON.stringify(state))
 })
 ```
+
+
 
 ## License
 

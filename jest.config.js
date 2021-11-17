@@ -9,14 +9,16 @@ module.exports = {
     '/node_modules/',
     'src/index.ts',
     'src/core/index.ts',
-    'src/platform/',
     '\\.d\\.ts$'
   ],
   testMatch: [
     '<rootDir>/test/unit/*.spec.ts',
+    '<rootDir>/test/unit/*.spec.tsx'
   ],
   transform: {
     '^.+\\.tsx?$': '@sucrase/jest-plugin',
   },
-  rootDir: __dirname
+  rootDir: __dirname,
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: [`<rootDir>/jest.setup.ts`]
 }

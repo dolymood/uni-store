@@ -5,7 +5,7 @@ import {
   defineStore
 } from '../../src'
 
-describe('Testing', () => {
+describe('Test Core', () => {
   const useCounter = defineStore(() => {
     const n = ref(0)
     const increment = (amount = 1) => {
