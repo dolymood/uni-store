@@ -13,7 +13,8 @@ import {
   defineStore
 } from '@uni-store/core'
 import {
-  reactiveReact
+  reactiveReact,
+  useSetup
 } from '../src'
 
 afterEach(cleanup)
@@ -117,6 +118,59 @@ describe('Test React', () => {
     expect(rendered.getAllByText('The computed times 101')).toHaveLength(1)
 
     // button click
+    fireEvent.click(rendered.getByTestId('clickableEle'))
+
+    expect(rendered.getAllByText('You clicked 2 times')).toHaveLength(1)
+    expect(rendered.getAllByText('The computed times 102')).toHaveLength(1)
+  })
+
+  it('should work correctly - useSetup', () => {
+    const LocalReactiveView = reactiveReact(function () {
+      const { n, computedN, increment } = useSetup(() => {
+        const n = ref(0)
+        const increment = (amount = 1) => {
+          n.value += amount
+        }
+
+        const computedN = computed(() => {
+          return n.value + 100
+        })
+
+        return {
+          n,
+          increment,
+          computedN
+        }
+      })
+      return (
+        <div>
+          <p>You clicked {n} times</p>
+          <p>The computed times {computedN}</p>
+          <button data-testid="clickableEle" onClick={() => increment()}>
+            Click me
+          </button>
+        </div>
+      )
+    })
+
+    const App = () => {
+      return (
+        <LocalReactiveView />
+      )
+    }
+
+    const rendered = render(<App />)
+
+    expect(rendered.getAllByText('You clicked 0 times')).toHaveLength(1)
+    expect(rendered.getAllByText('The computed times 100')).toHaveLength(1)
+
+    // button click
+    fireEvent.click(rendered.getByTestId('clickableEle'))
+
+    expect(rendered.getAllByText('You clicked 1 times')).toHaveLength(1)
+    expect(rendered.getAllByText('The computed times 101')).toHaveLength(1)
+
+    // button click again
     fireEvent.click(rendered.getByTestId('clickableEle'))
 
     expect(rendered.getAllByText('You clicked 2 times')).toHaveLength(1)
