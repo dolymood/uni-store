@@ -55,7 +55,7 @@
     "@uni-store/core": "^0.1.0"
   },
   "peerDependencies": {
-    "@uni-store/core": "^0.1.0",
+    "@uni-store/core": "0.1.0",
     "react": "^17"
   },
   "repository": {
