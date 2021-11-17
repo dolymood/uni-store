@@ -76,7 +76,7 @@ export function reactiveReact<
   }
   const baseComponentName = baseComponent.displayName || baseComponent.name
   const wrappedComponent = (props: P, ref: Ref<TRef>) => {
-    return useObserver(() => baseComponent(props, ref))
+    return useReactive(() => baseComponent(props, ref))
   }
   wrappedComponent.displayName = baseComponentName
 
@@ -121,7 +121,7 @@ function copyStaticProperties(base: any, target: any) {
   })
 }
 
-function useObserver<T>(fn: () => T): T {
+function useReactive<T>(fn: () => T): T {
   // todo: necessary ?
   const scopeRef = useRef<EffectScope | null>(null)
   const forceUpdate = useForceUpdate()
