@@ -1,4 +1,4 @@
-# uni-store
+# uni-store [![npm](https://badgen.net/npm/v/@uni-store/core)](https://www.npmjs.com/package/@uni-store/core) [![build status](https://github.com/dolymood/uni-store/workflows/test/badge.svg)](https://github.com/dolymood/uni-store/actions/workflows/test.yml) [![coverage](https://badgen.net/codecov/c/github/dolymood/uni-store)](https://codecov.io/github/dolymood/uni-store)
 
 Unified Store. You can use `@uni-store/core` with Vue or React(with `@uni-store/react`) fornow.
 

@@ -1,4 +1,4 @@
-# @uni-store/react
+# @uni-store/react [![npm](https://badgen.net/npm/v/@uni-store/react)](https://www.npmjs.com/package/@uni-store/react) [![build status](https://github.com/dolymood/uni-store/workflows/test/badge.svg)](https://github.com/dolymood/uni-store/actions/workflows/test.yml) [![coverage](https://badgen.net/codecov/c/github/dolymood/uni-store)](https://codecov.io/github/dolymood/uni-store)
 
 Unified Store for React.
 
