@@ -131,6 +131,12 @@ function useReactive<T>(fn: () => T): T {
   const scopeRef = useRef<EffectScope | null>(null)
   const updatedRef = useRef(false)
   const forceUpdate = useForceUpdate()
+  const setUpdatedRef = () => {
+    updatedRef.current = true
+    nextTick(() => {
+      updatedRef.current = true
+    })
+  }
 
   let rendering!: T
   if (!scopeRef.current) {
@@ -152,10 +158,7 @@ function useReactive<T>(fn: () => T): T {
       } else {
         // new render
         // collect deps
-        updatedRef.current = true
-        nextTick(() => {
-          updatedRef.current = true
-        })
+        setUpdatedRef()
         rendering = fn()
       }
     })
@@ -164,6 +167,7 @@ function useReactive<T>(fn: () => T): T {
   useEffect(() => () => {
     scope.stop()
     scopeRef.current = null
+    setUpdatedRef()
   }, [])
 
   return rendering
