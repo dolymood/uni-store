@@ -210,6 +210,8 @@ store.$subscribe((state) => {
 
 ### With React
 
+#### reactiveReact
+
 ```tsx
 import { reactiveReact } from '@uni-store/react'
 
@@ -223,7 +225,84 @@ ReactDOM.render(<ReactiveView />, document.body)
 
 You can get a Reactive React Component by `const ReactiveComponent = reactiveReact(Component: React.FunctionComponent)`.
 
-Or even another usage after `v0.2.0`:
+#### useSetup & defineSetup
+
+- After `v0.3.0` you can use `useSetup` and `defineSetup`:
+
+```tsx
+import { reactiveReact, useSetup, defineSetup } from '@uni-store/react'
+type P = {
+  base: number
+}
+
+// use `defineSetup`
+const useCustomTimer = defineSetup((reactiveProps: P) => {
+  const s = ref(1)
+  const timer = computed(() => {
+    return s.value + reactiveProps.base
+  })
+  const increment = (amount = 1) => {
+    s.value += amount
+  }
+  return {
+    timer,
+    increment
+  }
+})
+
+const LocalTimerView = reactiveReact<P>(function (props) {
+  const { timer, increment: timerIncrement } = useCustomTimer(props)
+  return (
+    <div>
+      <p>timer {timer}</p>
+      <button onClick={() => timerIncrement()}>
+        Click me
+      </button>
+    </div>
+  )
+})
+
+// just use `useSetup`
+const LocalReactiveView = reactiveReact<P>(function (props) {
+  // you can also use useCustomTimer here
+  const { n, increment } = useSetup((reactiveProps) => {
+    setupCalledTimes++
+    const s = ref(0)
+    const n = computed(() => {
+      return s.value + reactiveProps.base
+    })
+    const increment = (amount = 1) => {
+      s.value += amount
+    }
+
+    return {
+      n,
+      increment
+    }
+  }, props)
+  return (
+    <div>
+      <p>You clicked {n} times</p>
+      <button onClick={() => increment()}>
+        Click me
+      </button>
+    </div>
+  )
+})
+
+const App = () => {
+  const [base, setBase] = useState(0)
+  return (
+    <div>
+      <LocalReactiveView base={base} />
+      <LocalTimerView base={base} />
+      <button data-testid="setBaseEle" onClick={() => setBase(base + 2)}>setBaseEle</button>
+    </div>
+  )
+}
+```
+
+- After `v0.2.0`, you can use `useSetup<S, DependencyList>(() => S, DependencyList)`, but this API is **deprecated** after `v0.3.0`.
 
 ```tsx
 import { ref, computed } from '@uni-store/core'
