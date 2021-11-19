@@ -1,11 +1,4 @@
 # [0.3.0](https://github.com/dolymood/uni-store/compare/v0.2.0...v0.3.0) (2021-11-19)
-
-
-### Bug Fixes
-
-* should reset updatedRef when unmounted ([8588414](https://github.com/dolymood/uni-store/commit/85884148bb835cdeb6f3ad395aad661e9aa064f3))
-
-
 ### Features
 
 * ensure once render in one tick ([f3915dd](https://github.com/dolymood/uni-store/commit/f3915dd27f83ddb9200580e4bc356f92afea8580))
