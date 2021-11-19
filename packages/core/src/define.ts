@@ -1,9 +1,9 @@
 import {
   markRaw,
   effectScope,
-  UnwrapNestedRefs,
   reactive
 } from '@vue/reactivity'
+import type { UnwrapNestedRefs } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import type { WatchOptions } from '@vue/runtime-core'
 import { addSubscription } from './subscriptions'
