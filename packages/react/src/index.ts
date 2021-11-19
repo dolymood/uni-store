@@ -19,7 +19,8 @@ import type {
 } from 'react'
 import {
   effectScope,
-  watchSyncEffect
+  watchSyncEffect,
+  nextTick
 } from '@uni-store/core'
 import type {
   EffectScope
@@ -128,6 +129,7 @@ function copyStaticProperties(base: any, target: any) {
 function useReactive<T>(fn: () => T): T {
   // todo: necessary ?
   const scopeRef = useRef<EffectScope | null>(null)
+  const updatedRef = useRef(false)
   const forceUpdate = useForceUpdate()
 
   let rendering!: T
@@ -142,11 +144,18 @@ function useReactive<T>(fn: () => T): T {
       if (rendering) {
         // deps change trigger rerender
         // just forceUpdate
-        forceUpdate()
+        updatedRef.current && nextTick(() => {
+          !updatedRef.current && forceUpdate()
+        })
+        updatedRef.current = false
         // no deps now
       } else {
         // new render
         // collect deps
+        updatedRef.current = true
+        nextTick(() => {
+          updatedRef.current = true
+        })
         rendering = fn()
       }
     })
