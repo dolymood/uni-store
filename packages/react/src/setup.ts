@@ -31,6 +31,15 @@ function useSetup<SS extends object, Props, Deps> (setup: (props?: Props) => SS,
   return reactive(setupState)
 }
 
+function defineSetup<SS extends object> (setup: () => SS): () => UnwrapNestedRefs<SS>
+function defineSetup<SS extends object, Props> (setup: (props: Props) => SS): (props: Props) => UnwrapNestedRefs<SS>
+function defineSetup<SS extends object, Props> (setup: (props?: Props) => SS) {
+  return (props?: Props) => {
+    return useSetup(setup, props)
+  }
+}
+
 export {
+  defineSetup,
   useSetup
 }
