@@ -9,10 +9,27 @@ import type { WatchOptions } from '@vue/runtime-core'
 import { addSubscription } from './subscriptions'
 import type { SubscriptionCallback } from './subscriptions'
 
+/**
+ * Store type. With state and functions.
+ */
 export type Store<SS extends object, S = UnwrapNestedRefs<SS>> = {
-  $dispose: () => void
-  $subscribe: (callback: SubscriptionCallback<S>, options?: object) => () => void
+  /**
+   * State of the Store
+   */
   readonly $state: S
+  /**
+   * Stops the associated effect scope of the store.
+   */
+  $dispose: () => void
+  /**
+   * Setups a callback to be called whenever the state changes. It also returns
+   * a function to remove the callback.
+   *
+   * @param callback - callback passed to the watcher
+   * @param options - `watch` options
+   * @returns function that removes the watcher
+   */
+  $subscribe: (callback: SubscriptionCallback<S>, options?: object) => () => void
 } & S
 
 function createStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => SS): Store<SS, S> {
@@ -75,6 +92,12 @@ function createStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => 
   return store
 }
 
+/**
+ * Create a `useStore` function that retrieves the store instance
+ *
+ * @param setup - function that defines the store
+ * @returns `useStore` function with `reset` param that determines whether create a new store instance
+ */
 export function defineStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => SS) {
   let store: Store<SS, S>
   return function useStore (reset: boolean = false) {

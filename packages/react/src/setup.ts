@@ -4,10 +4,21 @@ import { useMemo, useRef } from 'react'
 import type { DependencyList } from 'react'
 
 /**
+ * useSetup with deps
  * @deprecated Use `useSetup(setup: (props: Props) => SS, props: Props)`
+ * @param setup - function that defines the setup state
  */
 function useSetup<SS extends object, Deps extends DependencyList> (setup: () => SS, deps: Deps): UnwrapNestedRefs<SS>
+/**
+ * useSetup
+ * @param setup - function that defines the setup state
+ */
 function useSetup<SS extends object> (setup: () => SS): UnwrapNestedRefs<SS>
+/**
+ * useSetup with props
+ * @param setup - function that defines the setup state
+ * @param props - Props
+ */
 function useSetup<SS extends object, Props> (setup: (props: Props) => SS, props: Props): UnwrapNestedRefs<SS>
 function useSetup<SS extends object, Props, Deps> (setup: (props?: Props) => SS, props?: Props | Deps) {
   if (Array.isArray(props)) {
@@ -31,7 +42,16 @@ function useSetup<SS extends object, Props, Deps> (setup: (props?: Props) => SS,
   return reactive(setupState)
 }
 
+/**
+ * Create a `useSetup` function that defines setup state
+ * @param setup - function that defines the setup state
+ */
 function defineSetup<SS extends object> (setup: () => SS): () => UnwrapNestedRefs<SS>
+/**
+ * Create a `useSetup` function that defines setup state
+ * @param setup - function that defines the setup state
+ * @param props - Props
+ */
 function defineSetup<SS extends object, Props> (setup: (props: Props) => SS): (props: Props) => UnwrapNestedRefs<SS>
 function defineSetup<SS extends object, Props> (setup: (props?: Props) => SS) {
   return (props?: Props) => {
