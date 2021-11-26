@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/dolymood/uni-store/compare/v0.3.0...v0.3.1) (2021-11-26)
+
+
+### Bug Fixes
+
+* should stopWatch when rerender ([7d2283b](https://github.com/dolymood/uni-store/commit/7d2283be3926a1a8dd19e7a3b2598e8a65b9e69c))
+
+
+
 # [0.3.0](https://github.com/dolymood/uni-store/compare/v0.2.0...v0.3.0) (2021-11-19)
 ### Features
 
