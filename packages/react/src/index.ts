@@ -23,7 +23,8 @@ import {
   nextTick
 } from '@uni-store/core'
 import type {
-  EffectScope
+  EffectScope,
+  WatchStopHandle
 } from '@uni-store/core'
 
 export * from './setup'
@@ -156,14 +157,9 @@ function copyStaticProperties(base: any, target: any) {
 function useReactive<T>(fn: () => T): T {
   // todo: necessary ?
   const scopeRef = useRef<EffectScope | null>(null)
+  const stopWatchRef = useRef<WatchStopHandle | null>(null)
   const updatedRef = useRef(false)
   const forceUpdate = useForceUpdate()
-  const setUpdatedRef = () => {
-    updatedRef.current = true
-    nextTick(() => {
-      updatedRef.current = true
-    })
-  }
 
   let rendering!: T
   if (!scopeRef.current) {
@@ -173,28 +169,31 @@ function useReactive<T>(fn: () => T): T {
   // clear effects, re collect deps
   scope.effects.length = 0
   scope.run(() => {
-    watchSyncEffect(() => {
+    stopWatchRef.current && stopWatchRef.current()
+    stopWatchRef.current = watchSyncEffect(() => {
       if (rendering) {
         // deps change trigger rerender
         // just forceUpdate
-        updatedRef.current && nextTick(() => {
-          !updatedRef.current && forceUpdate()
-        })
+        updatedRef.current && nextTick(forceUpdate)
         updatedRef.current = false
         // no deps now
       } else {
         // new render
         // collect deps
-        setUpdatedRef()
+        updatedRef.current = true
         rendering = fn()
       }
     })
   })
 
   useEffect(() => () => {
+    if (stopWatchRef.current) {
+      stopWatchRef.current()
+      stopWatchRef.current = null
+    }
     scope.stop()
     scopeRef.current = null
-    setUpdatedRef()
+    updatedRef.current = true
   }, [])
 
   return rendering
