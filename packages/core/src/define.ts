@@ -40,7 +40,6 @@ function createStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => 
     $subscribe
   }) as Store<SS, S>
 
-  let isListening = false
   // watcher options for $subscribe
   const subscribeOptions: WatchOptions = {
     deep: true,
@@ -53,9 +52,7 @@ function createStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => 
       watch(
         () => store,
         (newStore) => {
-          if (isListening) {
-            callback(newStore.$state)
-          }
+          callback(newStore.$state)
         },
         Object.assign({}, subscribeOptions, options)
       )
@@ -86,8 +83,6 @@ function createStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => 
   })
 
   Object.assign(store, setupState)
-
-  isListening = true
 
   return store
 }
