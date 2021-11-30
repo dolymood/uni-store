@@ -19,18 +19,18 @@ function useSetup<SS extends object> (setup: () => SS): UnwrapNestedRefs<SS>
  * @param setup - function that defines the setup state
  * @param props - Props
  */
-function useSetup<SS extends object, Props> (setup: (props: Props) => SS, props: Props): UnwrapNestedRefs<SS>
-function useSetup<SS extends object, Props, Deps> (setup: (props?: Props) => SS, props?: Props | Deps) {
+function useSetup<SS extends object, Props> (setup: (props: UnwrapNestedRefs<Props>) => SS, props: Props): UnwrapNestedRefs<SS>
+function useSetup<SS extends object, Props, Deps> (setup: (props?: UnwrapNestedRefs<Props | {}>) => SS, props?: Props | Deps) {
   if (Array.isArray(props)) {
     // props is DependencyList
     return reactive(useMemo(setup, props))
   }
-  let propsRef = useRef<Props>()
+  let propsRef = useRef<UnwrapNestedRefs<Props | {}>>()
   let resultRef = useRef<SS>()
   const setupState = useMemo(() => {
     if (!resultRef.current) {
       // first in
-      propsRef.current = reactive(props ? { ...props } : {}) as Props
+      propsRef.current = reactive(props ? props : {})
       const setupResult = setup(propsRef.current)
       resultRef.current = setupResult
     } else {
@@ -52,8 +52,8 @@ function defineSetup<SS extends object> (setup: () => SS): () => UnwrapNestedRef
  * @param setup - function that defines the setup state
  * @param props - Props
  */
-function defineSetup<SS extends object, Props> (setup: (props: Props) => SS): (props: Props) => UnwrapNestedRefs<SS>
-function defineSetup<SS extends object, Props> (setup: (props?: Props) => SS) {
+function defineSetup<SS extends object, Props> (setup: (props: UnwrapNestedRefs<Props>) => SS): (props: Props) => UnwrapNestedRefs<SS>
+function defineSetup<SS extends object, Props> (setup: (props?: UnwrapNestedRefs<Props | {}>) => SS) {
   return (props?: Props) => {
     return useSetup(setup, props)
   }
