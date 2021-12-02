@@ -1,3 +1,12 @@
+## [0.3.2](https://github.com/dolymood/uni-store/compare/v0.3.1...v0.3.2) (2021-12-02)
+
+
+### Bug Fixes
+
+* setup props should be UnwrapNestedRefs<Props> ([f02c037](https://github.com/dolymood/uni-store/commit/f02c037153e17de0c05dfbb495441e19f6d9dfd9))
+
+
+
 ## [0.3.1](https://github.com/dolymood/uni-store/compare/v0.3.0...v0.3.1) (2021-11-26)
 
 

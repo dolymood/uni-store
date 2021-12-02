@@ -1,6 +1,6 @@
 {
   "name": "@uni-store/react",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Unified Store for React",
   "main": "index.js",
   "module": "dist/uni-store-react.mjs",
@@ -55,7 +55,7 @@
     "@uni-store/core": "*"
   },
   "peerDependencies": {
-    "@uni-store/core": "0.3.1",
+    "@uni-store/core": "0.3.2",
     "react": "^17"
   },
   "repository": {
