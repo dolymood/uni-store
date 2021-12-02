@@ -71,10 +71,7 @@ function createStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => 
     subscriptions = []
   }
 
-  const setupState = scope.run(() => {
-    const setupResult = setup()
-    return setupResult
-  })!
+  const setupState = scope.run(() => setup())!
 
   Object.defineProperty(store, '$state', {
     get () {
@@ -90,7 +87,7 @@ function createStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => 
 /**
  * Create a `useStore` function that retrieves the store instance
  *
- * @param setup - function that defines the store
+ * @param setup - function that creates the store
  * @returns `useStore` function with `reset` param that determines whether create a new store instance
  */
 export function defineStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => SS) {

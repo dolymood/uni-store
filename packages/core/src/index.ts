@@ -1,4 +1,3 @@
-export * from './define'
 export * from '@vue/reactivity'
 export {
   nextTick,
@@ -15,3 +14,5 @@ export type {
   WatchSource,
   WatchStopHandle
 } from '@vue/runtime-core'
+// API
+export * from './store'

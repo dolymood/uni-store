@@ -52,7 +52,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@uni-store/core": "^0.1.0"
+    "@uni-store/core": "*"
   },
   "peerDependencies": {
     "@uni-store/core": "0.3.1",

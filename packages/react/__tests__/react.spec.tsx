@@ -15,15 +15,15 @@ import {
   nextTick
 } from '@uni-store/core'
 import {
+  defineSetup,
   reactiveReact,
-  useSetup,
-  defineSetup
+  useSetup
 } from '../src'
 
 afterEach(cleanup)
 
 describe('Test React', () => {
-  const useCounter = defineStore(() => {
+  const useCounter = () => {
     const n = ref(0)
     const increment = (amount = 1) => {
       n.value += amount
@@ -38,7 +38,8 @@ describe('Test React', () => {
       increment,
       computedN
     }
-  })
+  }
+  const useCounterStore = defineStore(useCounter)
 
   const actAsync = async (handler: Function) => {
     await act(async () => {
@@ -54,7 +55,7 @@ describe('Test React', () => {
   }
 
   it('should work correctly with props', async () => {
-    const CounterView: FunctionComponent<{ counter: ReturnType<typeof useCounter> }> = function  ({ counter }) {
+    const CounterView: FunctionComponent<{ counter: ReturnType<typeof useCounterStore> }> = function  ({ counter }) {
       const { n, computedN, increment } = counter
       return (
         <div>
@@ -70,7 +71,7 @@ describe('Test React', () => {
     const ReactiveView = reactiveReact(CounterView)
 
     const App = () => {
-      const counter = useCounter()
+      const counter = useCounterStore()
       return (
         <ReactiveView counter={counter} />
       )
@@ -84,7 +85,7 @@ describe('Test React', () => {
     expect(rendered.getAllByText('The computed times 100')).toHaveLength(1)
 
     await actAsync(() => {
-      const counter = useCounter()
+      const counter = useCounterStore()
       counter.increment()
     })
 
@@ -101,10 +102,10 @@ describe('Test React', () => {
   it('should work correctly with local use', async () => {
     // new another store
     // hack
-    useCounter(true)
+    useCounterStore(true)
 
     const ReactiveView = reactiveReact(function () {
-      const { n, computedN, increment } = useCounter()
+      const { n, computedN, increment } = useCounterStore()
       return (
         <div>
           <p>You clicked {n} times</p>
@@ -130,7 +131,7 @@ describe('Test React', () => {
     expect(rendered.getAllByText('The computed times 100')).toHaveLength(1)
 
     await actAsync(() => {
-      const counter = useCounter()
+      const counter = useCounterStore()
       counter.increment()
     })
 
@@ -272,9 +273,10 @@ describe('Test React', () => {
     type P = {
       base: number
     }
-    let timerSetupCalledTimes = 0
-    const useTimer = defineSetup((props: P) => {
-      timerSetupCalledTimes++
+    let timerUseCalledTimes = 0
+    // plain useXxx
+    const useTimer = (props: P) => {
+      timerUseCalledTimes++
       const s = ref(1)
       const timer = computed(() => {
         return s.value + props.base
@@ -286,17 +288,28 @@ describe('Test React', () => {
         timer,
         increment
       }
-    })
+    }
+    const useTimer2 = defineSetup(useTimer)
     let timerCalledTimes = 0
     const LocalTimerView = reactiveReact<P>(function (props) {
       timerCalledTimes++
-      const { timer, increment: timerIncrement } = useTimer(props)
+      // just normal
+      const { timer, increment } = useSetup(useTimer, props)
+      const { timer: timer2, increment: increment2 } = useTimer2(props)
       return (
         <div>
-          <p>timer {timer}</p>
-          <button data-testid="timerEle" onClick={() => timerIncrement()}>
-            Click me
-          </button>
+          <div>
+            <p>timer {timer}</p>
+            <button data-testid="timerEle" onClick={() => increment()}>
+              Click me
+            </button>
+          </div>
+          <div>
+            <p>timer2 {timer2}</p>
+            <button data-testid="timer2Ele" onClick={() => increment2()}>
+              Click me 2
+            </button>
+          </div>
         </div>
       )
     })
@@ -347,10 +360,12 @@ describe('Test React', () => {
     expect(calledTimes).toBe(1)
     expect(setupCalledTimes).toBe(1)
     expect(timerCalledTimes).toBe(1)
-    expect(timerSetupCalledTimes).toBe(1)
+    // we use useTimer twice in LocalTimerView
+    expect(timerUseCalledTimes).toBe(2)
     expect(rendered.getAllByText('You clicked 0 times')).toHaveLength(1)
     // 1 + 0
     expect(rendered.getAllByText('timer 1')).toHaveLength(1)
+    expect(rendered.getAllByText('timer2 1')).toHaveLength(1)
 
     // button click
     await actClickEvent(rendered.getByTestId('clickableEle'))
@@ -359,9 +374,16 @@ describe('Test React', () => {
     expect(rendered.getAllByText('You clicked 1 times')).toHaveLength(1)
     await actClickEvent(rendered.getByTestId('timerEle'))
     expect(timerCalledTimes).toBe(2)
-    expect(timerSetupCalledTimes).toBe(1)
+    expect(timerUseCalledTimes).toBe(2)
     // 2 + 0
     expect(rendered.getAllByText('timer 2')).toHaveLength(1)
+    expect(rendered.getAllByText('timer2 1')).toHaveLength(1)
+    await actClickEvent(rendered.getByTestId('timer2Ele'))
+    expect(timerCalledTimes).toBe(3)
+    expect(timerUseCalledTimes).toBe(2)
+    // 2 + 0
+    expect(rendered.getAllByText('timer 2')).toHaveLength(1)
+    expect(rendered.getAllByText('timer2 2')).toHaveLength(1)
 
     // setBase button click
     await actClickEvent(rendered.getByTestId('setBaseEle'))
@@ -369,12 +391,13 @@ describe('Test React', () => {
     expect(calledTimes).toBe(3)
     // only once
     expect(setupCalledTimes).toBe(1)
-    expect(timerCalledTimes).toBe(3)
-    expect(timerSetupCalledTimes).toBe(1)
+    expect(timerCalledTimes).toBe(4)
+    expect(timerUseCalledTimes).toBe(2)
     // 3 times 2 + 1
     expect(rendered.getAllByText('You clicked 3 times')).toHaveLength(1)
     // 2 + 2
     expect(rendered.getAllByText('timer 4')).toHaveLength(1)
+    expect(rendered.getAllByText('timer2 4')).toHaveLength(1)
 
     // button click again
     await actClickEvent(rendered.getByTestId('clickableEle'))
@@ -383,9 +406,10 @@ describe('Test React', () => {
     expect(setupCalledTimes).toBe(1)
     expect(rendered.getAllByText('You clicked 4 times')).toHaveLength(1)
     await actClickEvent(rendered.getByTestId('timerEle'))
-    expect(timerCalledTimes).toBe(4)
-    expect(timerSetupCalledTimes).toBe(1)
+    expect(timerCalledTimes).toBe(5)
+    expect(timerUseCalledTimes).toBe(2)
     // 3 + 2
     expect(rendered.getAllByText('timer 5')).toHaveLength(1)
+    expect(rendered.getAllByText('timer2 4')).toHaveLength(1)
   })
 })
