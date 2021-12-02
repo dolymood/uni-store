@@ -235,8 +235,7 @@ type P = {
   base: number
 }
 
-// use `defineSetup`
-const useCustomTimer = defineSetup((reactiveProps: P) => {
+const useTimer = (reactiveProps: P) => {
   const s = ref(1)
   const timer = computed(() => {
     return s.value + reactiveProps.base
@@ -248,10 +247,14 @@ const useCustomTimer = defineSetup((reactiveProps: P) => {
     timer,
     increment
   }
-})
+}
+// use `defineSetup`
+const useCustomTimer = defineSetup(useTimer)
 
 const LocalTimerView = reactiveReact<P>(function (props) {
   const { timer, increment: timerIncrement } = useCustomTimer(props)
+  // or useSetup with plain useTimer
+  const { timer, increment: timerIncrement } = useSetup(useTimer, props)
   return (
     <div>
       <p>timer {timer}</p>
