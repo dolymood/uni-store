@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Unified Store",
   "scripts": {
     "build": "node scripts/build.js",

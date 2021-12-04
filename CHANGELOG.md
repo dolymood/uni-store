@@ -1,3 +1,13 @@
+## [0.3.3](https://github.com/dolymood/uni-store/compare/v0.3.2...v0.3.3) (2021-12-04)
+
+
+### Bug Fixes
+
+* one react component should have a detached effectScope ([d40da27](https://github.com/dolymood/uni-store/commit/d40da27771859ce95660c8c53d53af1faabe131d))
+* one store should have a detached effectScope ([01dc7fc](https://github.com/dolymood/uni-store/commit/01dc7fccc0f5da3f757f6482be7572416fde4c54))
+
+
+
 ## [0.3.2](https://github.com/dolymood/uni-store/compare/v0.3.1...v0.3.2) (2021-12-02)
 
 
