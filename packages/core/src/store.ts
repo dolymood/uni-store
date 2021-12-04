@@ -33,7 +33,7 @@ export type Store<SS extends object, S = UnwrapNestedRefs<SS>> = {
 } & S
 
 function createStore<SS extends object, S = UnwrapNestedRefs<SS>> (setup: () => SS): Store<SS, S> {
-  const scope = effectScope()
+  const scope = effectScope(true)
 
   const store = reactive({
     $dispose,
