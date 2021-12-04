@@ -163,7 +163,7 @@ function useReactive<T>(fn: () => T): T {
 
   let rendering!: T
   if (!scopeRef.current) {
-    scopeRef.current = effectScope()
+    scopeRef.current = effectScope(true)
   }
   const scope = scopeRef.current
   // clear effects, re collect deps
