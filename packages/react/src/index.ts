@@ -46,34 +46,16 @@ export function reactiveReact<P extends object, TRef = {}>(
 ): MemoExoticComponent<
   ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<TRef>>
 >
-
-/**
- * Reactive React function component
- * @param baseComponent - the original function component
- * @param options - ReactiveReactOptions
- */
 export function reactiveReact<P extends object, TRef = {}>(
   baseComponent: ForwardRefRenderFunction<TRef, P>,
   options: ReactiveReactOptions & { forwardRef: true }
 ): MemoExoticComponent<
   ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<TRef>>
 >
-
-/**
- * Reactive React function component
- * @param baseComponent - the original function component
- * @param options - ReactiveReactOptions
- */
 export function reactiveReact<P extends object>(
   baseComponent: FunctionComponent<P>,
   options?: ReactiveReactOptions
 ): FunctionComponent<P>
-
-/**
- * Reactive React function component
- * @param baseComponent - the original function component
- * @param options - ReactiveReactOptions
- */
 export function reactiveReact<
   C extends FunctionComponent<any> | RefForwardingComponent<any> | ForwardRefRenderFunction<any>,
   Options extends ReactiveReactOptions
@@ -91,11 +73,6 @@ export function reactiveReact<
     : never /* forwardRef set for a non forwarding component */
   : C & { displayName: string }
 
-/**
- * Reactive React function component
- * @param baseComponent - the original function component
- * @param options - ReactiveReactOptions
- */
 export function reactiveReact<
   P extends object,
   TRef = {}

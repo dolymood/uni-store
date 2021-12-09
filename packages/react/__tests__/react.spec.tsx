@@ -145,6 +145,39 @@ describe('Test React', () => {
     expect(rendered.getAllByText('The computed times 102')).toHaveLength(1)
   })
 
+  it('shoule work correctly when forwardRef is true', () => {
+    interface IMethods {
+      focus(): void
+    }
+
+    interface IProps {
+      value: string
+    }
+
+    const FancyInput = reactiveReact(
+      (props: IProps, ref: React.Ref<IMethods>) => {
+        const inputRef = React.useRef<HTMLInputElement>(null)
+        React.useImperativeHandle(
+          ref,
+          () => ({
+            focus: () => {
+              inputRef.current!.focus()
+            }
+          }),
+          []
+        )
+        return <input ref={inputRef} defaultValue={props.value} />
+      },
+      { forwardRef: true }
+    )
+
+    const cr = React.createRef<IMethods>()
+    render(<FancyInput ref={cr} value="" />)
+    expect(cr).toBeTruthy()
+    expect(cr.current).toBeTruthy()
+    expect(typeof cr.current!.focus).toBe('function')
+  })
+
   it('should work correctly - useSetup(fn)', async () => {
     const LocalReactiveView = reactiveReact(function () {
       const { n, computedN, increment } = useSetup(() => {
