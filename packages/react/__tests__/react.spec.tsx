@@ -55,7 +55,7 @@ describe('Test React', () => {
   }
 
   it('should work correctly with props', async () => {
-    const CounterView: FunctionComponent<{ counter: ReturnType<typeof useCounterStore> }> = function  ({ counter }) {
+    const CounterView: FunctionComponent<{ counter: ReturnType<typeof useCounterStore> }> = function ({ counter }) {
       const { n, computedN, increment } = counter
       return (
         <div>
