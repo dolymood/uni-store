@@ -95,6 +95,10 @@ export function reactiveReact<
     wrappedComponent.contextTypes = (baseComponent as any).contextTypes
   }
 
+  // todo memo, check props.children change for better performance
+  // fornow props.children always be unequal
+  // because react only do shallowly compare
+
   // memo; we are not interested in deep updates
   // in props; we assume that if deep objects are changed,
   // this is in observables, which would have been tracked anyway
