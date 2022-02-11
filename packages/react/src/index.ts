@@ -135,6 +135,9 @@ function copyStaticProperties(base: any, target: any) {
   })
 }
 
+const NO_RENDERED: any = {}
+const RENDERING: any = {}
+
 function useReactive<T>(fn: () => T): T {
   // todo: necessary ?
   const scopeRef = useRef<EffectScope | null>(null)
@@ -142,7 +145,7 @@ function useReactive<T>(fn: () => T): T {
   const updatedRef = useRef(false)
   const forceUpdate = useForceUpdate()
 
-  let rendering!: T
+  let rendering: T = NO_RENDERED
   if (!scopeRef.current) {
     scopeRef.current = effectScope(true)
   }
@@ -152,16 +155,24 @@ function useReactive<T>(fn: () => T): T {
   scope.run(() => {
     stopWatchRef.current && stopWatchRef.current()
     stopWatchRef.current = watchSyncEffect(() => {
-      if (rendering) {
+      if (rendering !== NO_RENDERED) {
         // deps change trigger rerender
         // just forceUpdate
-        updatedRef.current && nextTick(forceUpdate)
-        updatedRef.current = false
+        if (rendering === RENDERING) {
+          // triggered value change in render
+          // should not happen, do nothing
+        } else {
+          updatedRef.current && nextTick(() => {
+            !updatedRef.current && forceUpdate()
+          })
+          updatedRef.current = false
+        }
         // no deps now
       } else {
         // new render
         // collect deps
         updatedRef.current = true
+        rendering = RENDERING
         rendering = fn()
       }
     })
