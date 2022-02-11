@@ -1,3 +1,12 @@
+## [0.3.4](https://github.com/dolymood/uni-store/compare/v0.3.3...v0.3.4) (2022-02-11)
+
+
+### Bug Fixes
+
+* react render result update ([1dc8106](https://github.com/dolymood/uni-store/commit/1dc81067bd6150fc2d5d094d3ccf1ac440b8bbf7))
+
+
+
 ## [0.3.3](https://github.com/dolymood/uni-store/compare/v0.3.2...v0.3.3) (2021-12-04)
 
 
