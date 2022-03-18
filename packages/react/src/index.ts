@@ -1,5 +1,6 @@
 // clone from https://github.com/mobxjs/mobx/blob/HEAD/packages/mobx-react-lite/src/observer.ts
 // modified by dolymood
+
 import {
   useState,
   useEffect,
@@ -134,6 +135,9 @@ function copyStaticProperties(base: any, target: any) {
     }
   })
 }
+
+// todo use latest observer, support react StrictMode/ConcurrentMode/Suspense modes
+// https://github.com/mobxjs/mobx/blob/3fa1f4d48c4b9b306ddec40e14c07ed183fb0c18/packages/mobx-react-lite/src/useObserver.ts
 
 const NO_RENDERED: any = {}
 const RENDERING: any = {}
