@@ -1,6 +1,6 @@
 {
   "name": "@uni-store/core",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Unified Store",
   "main": "index.js",
   "module": "dist/uni-store.mjs",

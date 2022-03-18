@@ -1,3 +1,17 @@
+## [0.3.5](https://github.com/dolymood/uni-store/compare/v0.3.4...v0.3.5) (2022-03-18)
+
+
+### Bug Fixes
+
+* export computed ([07c3877](https://github.com/dolymood/uni-store/commit/07c387750c1333a0d706f57925981cfca765ad45))
+
+
+### Features
+
+* export named api from reactivity ([c9c0875](https://github.com/dolymood/uni-store/commit/c9c0875e155b9296e2750d32711a60c924e86d2d))
+
+
+
 ## [0.3.4](https://github.com/dolymood/uni-store/compare/v0.3.3...v0.3.4) (2022-02-11)
 
 
