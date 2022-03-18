@@ -3,6 +3,7 @@ export {
   reactive,
   ref,
   readonly,
+  computed,
   // utilities
   unref,
   proxyRefs,
