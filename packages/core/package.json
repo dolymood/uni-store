@@ -52,8 +52,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@vue/reactivity": "^3.2.22",
-    "@vue/runtime-core": "^3.2.22"
+    "@vue/reactivity": "^3.2.31",
+    "@vue/runtime-core": "^3.2.31"
   },
   "repository": {
     "type": "git",
